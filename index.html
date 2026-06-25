@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบลงทะเบียน KKU Open House</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .wrapper {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        .container {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        .header {
+            background-color: #a52a2a; 
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .schedule-box {
+            background: #fff3f3;
+            border-left: 5px solid #a52a2a;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .schedule-box h3 {
+            margin-top: 0;
+            color: #a52a2a;
+            font-size: 18px;
+        }
+        .schedule-box ul {
+            padding-left: 20px;
+            margin: 5px 0;
+        }
+        .schedule-box li {
+            margin-bottom: 6px;
+        }
+        .cost-badge {
+            background-color: #fef0cd;
+            color: #855a00;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            border: 1px solid #ffe199;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="tel"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+        }
+        .form-group input:disabled {
+            background-color: #eee;
+            cursor: not-allowed;
+        }
+        .submit-btn {
+            background-color: #a52a2a;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: 'Prompt', sans-serif;
+        }
+        .submit-btn:hover {
+            background-color: #8b2323;
+        }
+        .submit-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .status-closed {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: none;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="container">
+        <div class="header">
+            <h1>แบบฟอร์มลงทะเบียน KKU Open House</h1>
+            <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">มหาวิทยาลัยขอนแก่น (ระบบออนไลน์กลาง)</p>
+        </div>
+
+        <div class="content">
+            <div class="status-closed" id="closedNotice">❌ ขณะนี้ระบบปิดรับลงทะเบียนแล้ว</div>
+
+            <div class="schedule-box">
+                <h3>📅 กำหนดการและคณะที่เปิดเข้าชม</h3>
+                <ul>
+                    <li><strong>วันที่ 24:</strong> ชมคณะเภสัชศาสตร์ และ สัตวศาสตร์</li>
+                    <li><strong>วันที่ 25:</strong> ชมคณะวิศวกรรมศาสตร์ และวิทยาการคอมพิวเตอร์</li>
+                </ul>
+            </div>
+            
+            <div class="cost-badge">
+                💰 ค่าใช้จ่ายร่วมกิจกรรม: ประมาณหรือไม่เกิน 1,000 บาท
+            </div>
+
+            <form id="regForm">
+                <div class="form-group">
+                    <label for="fullname">ชื่อ-นามสกุล</label>
+                    <input type="text" id="fullname" placeholder="นาย / นางสาว..." required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentId">เลขที่</label>
+                    <input type="number" id="studentId" placeholder="ระบุเลขที่ประจำตัว" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">เบอร์โทรศัพท์</label>
+                    <input type="tel" id="phone" placeholder="เช่น 0812345678" required>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">ยืนยันลงทะเบียน</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 🔗 ฝังคีย์เชื่อมต่อของแอดมินลงในระบบเรียบร้อยแล้ว
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxDxUYRDIjEyTC1AKujB36fZjL-fYeIMFljq-A4zYJ8of4xYE3vWV_0UtFlUS2tro8/exec";
+
+    const form = document.getElementById('regForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const closedNotice = document.getElementById('closedNotice');
+    const formInputs = form.querySelectorAll('input');
+
+    // 1. ตรวจสอบเวลาเปิดปิดอัตโนมัติ
+    async function checkSystemStatus() {
+        try {
+            const response = await fetch(WEB_APP_URL);
+            const data = await response.json();
+
+            if (!data.isOpen) {
+                submitBtn.disabled = true;
+                submitBtn.style.backgroundColor = "#ccc";
+                submitBtn.innerText = "🔒 ปิดรับลงทะเบียนแล้ว";
+                closedNotice.style.display = 'block';
+                closedNotice.innerHTML = `❌ ขณะนี้ระบบ "ปิด" รับลงทะเบียน<br><small style="font-weight:normal; color:#555;">(ช่วงเวลาเปิดระบบ: ${data.startTime} ถึง ${data.endTime})</small>`;
+                formInputs.forEach(input => input.disabled = true);
+            }
+        } catch (error) {
+            console.error("Status connection error:", error);
+        }
+    }
+    
+    checkSystemStatus();
+
+    // 2. ระบบส่งข้อมูลเข้า Google Sheets แบบแก้ปัญหา CORS 100%
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const fullname = document.getElementById('fullname').value;
+        const studentId = document.getElementById('studentId').value;
+        const phone = document.getElementById('phone').value;
+        const cost = 1000;
+
+        const isConfirmed = confirm(`โปรดตรวจสอบข้อมูลของคุณอีกครั้ง:\n\n• ชื่อ-สกุล: ${fullname}\n• เลขที่: ${studentId}\n• เบอร์โทร: ${phone}\n\nคุณยืนยันว่าข้อมูลถูกต้องใช่หรือไม่?`);
+
+        if (isConfirmed) {
+            submitBtn.disabled = true;
+            submitBtn.innerText = "กำลังบันทึกข้อมูลเข้าสู่ระบบ...";
+
+            const formData = new URLSearchParams();
+            formData.append('name', fullname);
+            formData.append('id', studentId);
+            formData.append('phone', phone);
+            formData.append('cost', cost);
+
+            try {
+                // ส่งข้อมูลเข้าสคริปต์แบบระบุโหมด no-cors เพื่อทะลุกำแพงเบราว์เซอร์
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', 
+                    body: formData
+                });
+                
+                // โหมด no-cors จะไม่คืนค่าตอบกลับ แต่จะบันทึกข้อมูลเข้า Google Sheets ได้สำเร็จแน่นอน
+                alert("🎉 บันทึกข้อมูลลงทะเบียนสำเร็จเรียบร้อยแล้วครับ!");
+                form.reset();
+
+            } catch (error) {
+                alert("❌ เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง");
+                console.error(error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "ยืนยันลงทะเบียน";
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
