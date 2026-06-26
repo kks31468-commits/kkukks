@@ -7,7 +7,6 @@
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@5/minimal.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
@@ -40,15 +39,12 @@
             box-sizing: border-box;
         }
 
-        /* การ์ดแก้ว 3 มิติ ลอยละมุน ไร้เหลี่ยมแข็ง */
         .container {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-radius: var(--radius-lg);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08), 
-                        0 10px 20px rgba(0, 0, 0, 0.04),
-                        inset 0 1px 0 rgba(255,255,255,0.6);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08), 0 10px 20px rgba(0, 0, 0, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.45);
             overflow: hidden;
             animation: cubicBackend 1s cubic-bezier(0.16, 1, 0.3, 1);
@@ -59,42 +55,24 @@
             color: white;
             padding: 50px 30px;
             text-align: center;
-            position: relative;
-        }
-
-        /* คลื่นวงกลมซ้อนมิติพื้นหลังด้านบน */
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: rgba(255,255,255,0.06);
-            border-radius: 50%;
         }
 
         .header h1 {
             margin: 0;
             font-size: 28px;
             font-weight: 700;
-            letter-spacing: 0.5px;
         }
 
         .header p {
             margin: 12px 0 0 0;
             font-size: 14px;
             opacity: 0.85;
-            font-weight: 300;
-            letter-spacing: 1px;
         }
 
         .content {
             padding: 40px 30px;
-            background: rgba(255, 255, 255, 0.4);
         }
 
-        /* กล่องแจ้งเตือนปิดระบบ */
         .status-closed {
             background: #fff5f5;
             color: #e53e3e;
@@ -104,7 +82,6 @@
             font-weight: 500;
             margin-bottom: 25px;
             border: 1px solid #fed7d7;
-            font-size: 15px;
         }
 
         .section-title {
@@ -117,7 +94,6 @@
             gap: 10px;
         }
 
-        /* 🌟 เอฟเฟกต์อิโมจิขยับได้ดุ๊กดิ๊ก */
         .animated-emoji {
             display: inline-block;
             animation: emojiFloat 2s ease-in-out infinite alternate;
@@ -130,7 +106,6 @@
             border-radius: var(--radius-md);
             margin-bottom: 30px;
             font-size: 14.5px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.02);
         }
 
         .info-box ul {
@@ -141,10 +116,6 @@
         .info-box li {
             margin-bottom: 12px;
             color: #4a5568;
-        }
-
-        .info-box li:last-child {
-            margin-bottom: 0;
         }
 
         .cost-notice {
@@ -158,7 +129,6 @@
             gap: 8px;
         }
 
-        /* ฟอร์มกรอกข้อมูลแบบโค้งมนและมีแอนิเมชันขยับตอบสนอง */
         .form-group {
             margin-bottom: 26px;
         }
@@ -171,7 +141,7 @@
             color: #4a5568;
         }
 
-        .form-group input, .form-group select {
+        .form-group input {
             width: 100%;
             padding: 15px 18px;
             border: 2px solid #e2e8f0;
@@ -179,81 +149,99 @@
             font-size: 15px;
             box-sizing: border-box;
             font-family: 'Prompt', sans-serif;
-            background: #ffffff;
-            color: var(--text-main);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* เอฟเฟกต์ตอนคลิกกล่องกรอกข้อมูล (Focus Effect) */
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus {
             outline: 0;
             border-color: #bd3a3a;
             box-shadow: 0 12px 24px rgba(189, 58, 58, 0.08);
             transform: translateY(-2px);
+            transition: all 0.3s ease;
         }
 
-        .form-group input:disabled, .form-group select:disabled {
-            background: #edf2f7;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* 🎚️ ระบบกดเลือกชั้นรูปแบบสไลด์ 3 มิติ (Segmented Slide Control) */
+        /* 🧪 ส่วนแก้ไขบั๊ก: แท็บเลื่อนสไตล์ Liquid Glass แบบล็อกตรงกลางเป๊ะ 100% */
         .slide-selector {
-            display: flex;
-            background: #edf2f7;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* แบ่ง 3 ช่องเท่ากันเป๊ะตามหลัก Grid */
+            background: rgba(226, 232, 240, 0.6);
             padding: 6px;
-            border-radius: var(--radius-md);
+            border-radius: 40px;
             position: relative;
-            user-select: none;
-            border: 1px solid rgba(0,0,0,0.02);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            height: 56px;
+            box-sizing: border-box;
+            align-items: center;
+        }
+
+        .slide-option-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
         }
 
         .slide-option {
-            flex: 1;
-            text-align: center;
-            padding: 14px 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-size: 15px;
             font-weight: 500;
             color: #718096;
             cursor: pointer;
-            z-index: 2;
+            z-index: 3; /* อยู่เหนือตัวสไลด์สีแดง */
             transition: color 0.3s ease;
         }
 
-        /* ตัวไฮไลท์ที่จะวิ่งสไลด์ตามอย่างนุ่มนวล */
+        /* ตัวสไลด์ของเหลว (Liquid Gel) */
         .slide-bg {
             position: absolute;
-            top: 6px;
+            top: 5px;
             left: 6px;
-            width: calc(33.33% - 8px);
-            height: calc(100% - 12px);
+            width: calc(33.333% - 8px); /* คำนวณความกว้างให้พอดี 1 ช่อง */
+            height: calc(100% - 10px);
             background: var(--primary-grad);
-            border-radius: calc(var(--radius-md) - 6px);
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            box-shadow: 0 8px 20px rgba(139, 30, 30, 0.25);
+            border-radius: 35px;
             z-index: 1;
+            /* ใช้ cubic-bezier เพิ่มความยืดหยุ่นเหมือนของเหลวขยับ */
+            transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1); 
+            box-shadow: 0 8px 16px rgba(139, 30, 30, 0.3), 
+                        inset 0 -3px 6px rgba(0,0,0,0.2), 
+                        inset 0 3px 6px rgba(255,255,255,0.3);
         }
 
-        /* ขยับไฮไลท์ตามตำแหน่งปุ่มที่กด */
-        input[value="ม.4"]:checked ~ .slide-bg { transform: translateX(0); }
-        input[value="ม.5"]:checked ~ .slide-bg { transform: translateX(100%); }
-        input[value="ม.6"]:checked ~ .slide-bg { transform: translateX(200%); }
-
-        input[value="ม.4"]:checked ~ label[for="m4"],
-        input[value="ม.5"]:checked ~ label[for="m5"],
-        input[value="ม.6"]:checked ~ label[for="m6"] {
-            color: white;
-            font-weight: 600;
+        /* แสงสะท้อนผิวกระจกด้านบนก้อนเจลสีแดง */
+        .slide-bg::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 15%;
+            width: 70%;
+            height: 5px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 3px;
         }
 
         .radio-hidden {
             display: none;
         }
 
-        /* ปุ่มกดดีไซน์โมเดิร์น ยืดหยุ่นตามแรงกด */
+        /* แก้ไขคำสั่งเลื่อน: ใช้ X% ที่สัมพันธ์กับ Grid ช่องตัวเลือก ทำให้ตรงล็อกกึ่งกลางทุกอัน */
+        #m4:checked ~ .slide-bg { transform: translateX(0%); }
+        #m5:checked ~ .slide-bg { transform: translateX(100%); }
+        #m6:checked ~ .slide-bg { transform: translateX(200%); }
+
+        /* เปลี่ยนสีตัวอักษรของช่องที่ถูกเลือกให้สว่างขึ้น */
+        #m4:checked ~ .slide-option-box [for="m4"],
+        #m5:checked ~ .slide-option-box [for="m5"],
+        #m6:checked ~ .slide-option-box [for="m6"] {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
         .submit-btn {
             background: var(--primary-grad);
             color: white;
@@ -270,7 +258,6 @@
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* เอฟเฟกต์ตอนเมาส์ชี้และกดปุ่ม */
         .submit-btn:hover {
             transform: translateY(-4px) scale(1.015);
             box-shadow: 0 20px 40px rgba(139, 30, 30, 0.35);
@@ -292,110 +279,17 @@
             margin-top: 30px;
             font-size: 12px;
             color: #718096;
-            letter-spacing: 0.5px;
         }
 
-        /* คลื่นแอนิเมชันของอิโมจิ */
         @keyframes emojiFloat {
             0% { transform: translateY(0) rotate(0deg); }
             100% { transform: translateY(-4px) rotate(10deg); }
         }
 
-        /* แอนิเมชันเปิดหน้าเว็บขยายมิติแบบ Smooth */
         @keyframes cubicBackend {
             from { opacity: 0; transform: scale(0.94) translateY(30px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
-
-        /* 🎚️ กล่องกระจกชั้นนอก (Outer Container) */
-.slide-selector {
-    display: flex;
-    background: rgba(240, 244, 248, 0.7); /* พื้นหลังจางๆ ให้เงาด้านในชัด */
-    padding: 6px;
-    border-radius: 40px; /* ขอบโค้งมนละมุนแบบแคปซูล */
-    position: relative;
-    user-select: none;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: inset 0 3px 6px rgba(0,0,0,0.05), 0 10px 20px rgba(0,0,0,0.02);
-    align-items: center;
-    height: 54px; /* ล็อกความสูงเพื่อไม่ให้ปุ่มดันกัน */
-    box-sizing: border-box;
-}
-
-/* ช่องตัวเลือกแต่ละช่อง */
-.slide-option-box {
-    flex: 1;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-
-/* ตัวอักษร ม.4 ม.5 ม.6 อยู่ตรงกลางเป๊ะ */
-.slide-option {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 15px;
-    font-weight: 500;
-    color: #5a6a85;
-    cursor: pointer;
-    z-index: 2; /* ดันข้อความมาอยู่เหนือก้อนลิควิด */
-    transition: color 0.3s ease, font-weight 0.3s ease;
-}
-
-/* 🧪 ตัวสไลด์เบื้องหลังสไตล์ก้อนของเหลวมันวาว (Liquid Glass Slider) */
-.slide-bg {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: calc(33.33% - 6px);
-    height: calc(100% - 8px);
-    background: linear-gradient(135deg, #cc3c3c 0%, #8b1e1e 100%); /* สีแดง มข. ไล่เฉด */
-    border-radius: 35px; /* โค้งมนแบบเจลเหลว */
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    z-index: 1;
-    
-    /* สร้างมิติความลึกและเงาตกกระทบแบบ 3D Gel */
-    box-shadow: 0 8px 16px rgba(139, 30, 30, 0.35), 
-                inset 0 -4px 8px rgba(0, 0, 0, 0.2), 
-                inset 0 4px 8px rgba(255, 255, 255, 0.3);
-}
-
-/* 🌟 ลูกเล่นประกายแสงสะท้อนขอบบน ให้ดูเหมือนแก้วเหลว (Glossy Highlight) */
-.slide-bg::after {
-    content: '';
-    position: absolute;
-    top: 3px;
-    left: 15%;
-    width: 70%;
-    height: 6px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
-    border-radius: 3px;
-}
-
-/* ซ่อนปุ่ม Radio เดิม */
-.radio-hidden {
-    display: none;
-}
-
-/* 🪄 สั่งให้ก้อนลิควิดขยับตามการคลิก (ตรงล็อก 100%) */
-#m4:checked ~ .slide-bg { transform: translateX(0); }
-#m5:checked ~ .slide-bg { transform: translateX(100%); }
-#m6:checked ~ .slide-bg { transform: translateX(200%); }
-
-/* เมื่อเลือกแล้ว ให้ตัวอักษรเปลี่ยนเป็นสีขาวเด่นขึ้นมา */
-#m4:checked ~ .slide-option-box [for="m4"],
-#m5:checked ~ .slide-option-box [for="m5"],
-#m6:checked ~ .slide-option-box [for="m6"] {
-    color: #ffffff;
-    font-weight: 600;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-}
     </style>
 </head>
 <body>
@@ -404,7 +298,7 @@
     <div class="container">
         <div class="header">
             <h1>KKU Open House</h1>
-            <p>ระบบลงทะเบียนออนไลน์ยุคใหม่</p>
+            <p>ระบบลงทะเบียนออนไลน์กลาง</p>
         </div>
 
         <div class="content">
@@ -430,7 +324,7 @@
             <form id="regForm">
                 <div class="form-group">
                     <label for="fullname">ชื่อ - นามสกุล</label>
-                    <input type="text" id="fullname" placeholder="ระบุชื่อพร้อมคำนำหน้า" required>
+                    <input type="text" id="fullname" placeholder="ระบุชื่อพร้อมคำนำหน้าชื่อ" required>
                 </div>
                 
                 <div class="form-group">
@@ -439,42 +333,41 @@
                 </div>
 
                 <div class="form-group">
-    <label>ระดับชั้นเรียน</label>
-    <div class="slide-selector">
-        
-        <input type="radio" name="level" value="ม.4" id="m4" class="radio-hidden" checked>
-        <input type="radio" name="level" value="ม.5" id="m5" class="radio-hidden">
-        <input type="radio" name="level" value="ม.6" id="m6" class="radio-hidden">
+                    <label>ระดับชั้นเรียน</label>
+                    <div class="slide-selector">
+                        
+                        <input type="radio" name="level" value="ม.4" id="m4" class="radio-hidden" checked>
+                        <input type="radio" name="level" value="ม.5" id="m5" class="radio-hidden">
+                        <input type="radio" name="level" value="ม.6" id="m6" class="radio-hidden">
 
-        <div class="slide-option-box">
-            <label for="m4" class="slide-option">ม.4</label>
-        </div>
+                        <div class="slide-option-box">
+                            <label for="m4" class="slide-option">ม.4</label>
+                        </div>
 
-        <div class="slide-option-box">
-            <label for="m5" class="slide-option">ม.5</label>
-        </div>
+                        <div class="slide-option-box">
+                            <label for="m5" class="slide-option">ม.5</label>
+                        </div>
 
-        <div class="slide-option-box">
-            <label for="m6" class="slide-option">ม.6</label>
-        </div>
+                        <div class="slide-option-box">
+                            <label for="m6" class="slide-option">ม.6</label>
+                        </div>
 
-        <div class="slide-bg"></div>
-        
-    </div>
-</div>
+                        <div class="slide-bg"></div>
+                    </div>
+                </div>
                 
                 <div class="form-group">
                     <label for="phone">เบอร์โทรศัพท์ติดต่อ</label>
                     <input type="tel" id="phone" placeholder="เช่น 0812345678" pattern="[0-9]{9,10}" required>
                 </div>
 
-                <button type="submit" class="submit-btn" id="submitBtn">ยืนยันลงทะเบียน</button>
+                <button type="submit" class="submit-btn" id="submitBtn">ยืนยันส่งข้อมูลลงทะเบียน</button>
             </form>
         </div>
     </div>
     
     <div class="footer">
-        🔒 ข้อมูลปลอดภัยและเป็นส่วนตัวตามมาตรฐาน PDPA 2026
+        🔒 ข้อมูลปลอดภัยตามมาตรฐานกลางสูงสุด (PDPA 2026)
     </div>
 </div>
 
@@ -493,7 +386,7 @@
 
             if (!data.isOpen) {
                 submitBtn.disabled = true;
-                submitBtn.innerText = "🔒 ปิดระบบรับสมัคร";
+                submitBtn.innerText = "🔒 ปิดระบบรับสมัครแล้ว";
                 closedNotice.style.display = 'block';
                 closedNotice.innerHTML = `<strong>❌ ระบบปิดรับลงทะเบียนชั่วคราว</strong><br><span style="font-size:12px; font-weight:normal; opacity:0.8">เปิดระบบอีกครั้ง: ${data.startTime} ถึง ${data.endTime}</span>`;
                 formInputs.forEach(input => input.disabled = true);
@@ -510,20 +403,18 @@
 
         const fullname = document.getElementById('fullname').value;
         const studentId = document.getElementById('studentId').value;
-        // ดึงข้อมูลระดับชั้นเรียนจากปุ่มสไลด์ที่เลือกอยู่ขณะนั้น
         const studentLevel = document.querySelector('input[name="level"]:checked').value;
         const phone = document.getElementById('phone').value;
         const cost = 1000;
 
-        // หน้าจอยืนยันสไตล์โมเดิร์นมินิมอล มีแอนิเมชัน ZoomIn แฟลชเร็วๆ
         Swal.fire({
-            title: 'ตรวจสอบข้อมูล',
+            title: 'ตรวจสอบข้อมูลลงทะเบียน',
             html: `
-                <div style="text-align: left; padding: 5px 15px; font-size: 14.5px; line-height: 2.2; color:#4a5568;">
+                <div style="text-align: left; padding: 5px 10px; font-size: 14.5px; line-height: 2.2; color:#4a5568;">
                     <b>• ชื่อ-สกุล:</b> ${fullname} <br>
                     <b>• เลขที่:</b> ${studentId} <br>
                     <b>• ระดับชั้น:</b> ${studentLevel} <br>
-                    <b>• เบอร์โทร:</b> ${phone}
+                    <b>• เบอร์โทรติดต่อ:</b> ${phone}
                 </div>
             `,
             icon: 'info',
@@ -531,34 +422,28 @@
             showCancelButton: true,
             confirmButtonColor: '#cc3c3c',
             cancelButtonColor: '#718096',
-            confirmButtonText: 'ข้อมูลถูกต้อง',
+            confirmButtonText: 'ยืนยันข้อมูล',
             cancelButtonText: 'แก้ไข',
             background: '#ffffff',
             borderRadius: '24px',
-            showClass: {
-                popup: 'animate__animated animate__zoomIn animate__faster'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__zoomOut animate__faster'
-            }
+            showClass: { popup: 'animate__animated animate__zoomIn animate__faster' },
+            hideClass: { popup: 'animate__animated animate__zoomOut animate__faster' }
         }).then(async (result) => {
             if (result.isConfirmed) {
                 
                 Swal.fire({
                     title: 'กำลังบันทึกข้อมูล ⏳',
-                    text: 'กรุณารอสักครู่ ระบบกำลังส่งข้อมูลเข้าฐานข้อมูล中央',
+                    text: 'ระบบกำลังนำส่งข้อมูลเข้าสู่คลาวด์ส่วนกลาง...',
                     allowOutsideClick: false,
                     borderRadius: '24px',
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
+                    didOpen: () => { Swal.showLoading(); }
                 });
 
                 const formData = new URLSearchParams();
                 formData.append('name', fullname);
                 formData.append('id', studentId);
-                formData.append('level', studentLevel); // ส่งค่าระดับชั้นเรียน
-                formData.append('room', '-'); // ส่งค่าว่างไปแทนเนื่องจากถอดช่องกรอกห้องออกแล้ว
+                formData.append('level', studentLevel);
+                formData.append('room', '-');
                 formData.append('phone', phone);
                 formData.append('cost', cost);
 
@@ -569,17 +454,14 @@
                         body: formData
                     });
                     
-                    // แจ้งเตือนสำเร็จพร้อมเอฟเฟกต์เด้งฉลองสวยงาม
                     Swal.fire({
                         title: 'สำเร็จเรียบร้อย! 🎉',
-                        text: 'บันทึกข้อมูลการลงทะเบียนของคุณแล้ว',
+                        text: 'ข้อมูลของท่านถูกจัดเก็บลงฐานข้อมูลสำเร็จแล้ว',
                         icon: 'success',
                         confirmButtonColor: '#cc3c3c',
                         confirmButtonText: 'ตกลง',
                         borderRadius: '24px',
-                        showClass: {
-                            popup: 'animate__animated animate__bounceIn'
-                        }
+                        showClass: { popup: 'animate__animated animate__bounceIn' }
                     });
                     
                     form.reset();
@@ -587,7 +469,7 @@
                 } catch (error) {
                     Swal.fire({
                         title: 'เกิดข้อผิดพลาด',
-                        text: 'กรุณาลองใหม่อีกครั้ง',
+                        text: 'กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต',
                         icon: 'error',
                         confirmButtonColor: '#cc3c3c',
                         borderRadius: '24px'
