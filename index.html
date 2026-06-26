@@ -3,186 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบลงทะเบียนเข้าร่วมกิจกรรม KKU Open House</title>
+    <title>KKU Open House Registration</title>
     
-    @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4@5/bootstrap-4.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@5/minimal.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        :root {
+            --primary: #a52a2a;
+            --primary-grad: linear-gradient(135deg, #bd3a3a 0%, #8b1e1e 100%);
+            --bg-grad: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            --text-main: #2d3748;
+            --radius-lg: 24px;
+            --radius-md: 14px;
+        }
+
         body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #f4f6f8;
-            color: #2b2b2b;
+            font-family: 'Prompt', sans-serif;
+            background: var(--bg-grad);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
-            line-height: 1.6;
-        }
-        
-        .top-bar {
-            background-color: #5c1313;
-            height: 8px;
-            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
         }
 
         .wrapper {
-            max-width: 650px;
-            margin: 40px auto;
-            padding: 0 20px;
+            width: 100%;
+            max-width: 580px;
+            padding: 40px 20px;
+            box-sizing: border-box;
         }
 
+        /* การ์ดสไตล์กระจกทันสมัย โค้งมน ไร้เหลี่ยม */
         .container {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e1e4e6;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             overflow: hidden;
-            transition: transform 0.3s ease;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .header {
-            background-color: #a52a2a; /* สีอิฐ มข. */
+            background: var(--primary-grad);
             color: white;
-            padding: 35px 30px;
+            padding: 45px 30px;
             text-align: center;
+            position: relative;
+        }
+
+        /* ลูกเล่นคลื่นแสงพริ้วไหวด้านหลัง Header */
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: -10%;
+            width: 120%;
+            height: 40px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
         }
 
         .header h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .header p {
             margin: 10px 0 0 0;
-            font-size: 15px;
-            opacity: 0.9;
+            font-size: 14px;
+            opacity: 0.85;
             font-weight: 300;
+            letter-spacing: 1px;
         }
 
         .content {
-            padding: 40px;
+            padding: 40px 35px 35px 35px;
+            background: rgba(255, 255, 255, 0.4);
         }
 
         .status-closed {
-            background-color: #fff3f3;
-            color: #a52a2a;
-            padding: 18px;
-            border-radius: 8px;
+            background: #fff5f5;
+            color: #e53e3e;
+            padding: 16px;
+            border-radius: var(--radius-md);
             text-align: center;
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 25px;
-            border: 1px solid #f5c6cb;
-            display: none;
+            border: 1px solid #fed7d7;
             font-size: 15px;
-            animation: fadeIn 0.5s ease-in-out;
+            box-shadow: 0 4px 12px rgba(229, 62, 62, 0.05);
         }
 
         .section-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
-            color: #a52a2a;
-            border-left: 4px solid #a52a2a;
-            padding-left: 10px;
-            margin-bottom: 20px;
-            margin-top: 0;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
+        /* กล่องกำหนดการสไตล์โมเดิร์นคุมโทน */
         .info-box {
-            background-color: #fdfefe;
-            border: 1px solid #e1e4e6;
-            padding: 20px;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0,0,0,0.04);
+            padding: 22px;
+            border-radius: var(--radius-md);
             margin-bottom: 30px;
-            font-size: 15px;
+            font-size: 14.5px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
 
         .info-box ul {
-            margin: 5px 0 0 0;
-            padding-left: 20px;
+            margin: 0;
+            padding-left: 18px;
         }
 
         .info-box li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            color: #4a5568;
+        }
+
+        .info-box li:last-child {
+            margin-bottom: 0;
         }
 
         .cost-notice {
             margin-top: 15px;
             padding-top: 15px;
-            border-top: 1px dashed #e1e4e6;
+            border-top: 1px dashed rgba(0,0,0,0.08);
             font-weight: 600;
-            color: #2b2b2b;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
+        /* ฟอร์มกรอกข้อมูลแบบสมูทและมีแอนิเมชันขยับตอบสนอง */
         .form-group {
-            margin-bottom: 22px;
+            margin-bottom: 24px;
+            position: relative;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 14px;
-            color: #495057;
+            color: #4a5568;
+            transition: all 0.3s ease;
         }
 
-        .form-group input[type="text"],
-        .form-group input[type="number"],
-        .form-group input[type="tel"],
-        .form-group select {
+        .form-group input, .form-group select {
             width: 100%;
-            padding: 13px;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
+            padding: 14px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: var(--radius-md);
             font-size: 15px;
             box-sizing: border-box;
-            font-family: 'Sarabun', sans-serif;
-            background-color: #fff;
-            color: #495057;
-            transition: all 0.2s ease-in-out;
+            font-family: 'Prompt', sans-serif;
+            background: #ffffff;
+            color: var(--text-main);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
+        /* เอฟเฟกต์ตอนคลิกกล่องกรอกข้อมูล (Focus Effect) */
+        .form-group input:focus, .form-group select:focus {
             outline: 0;
-            border-color: #a52a2a;
-            box-shadow: 0 0 0 0.25rem rgba(165, 42, 42, 0.12);
+            border-color: #bd3a3a;
+            background: #ffffff;
+            box-shadow: 0 10px 20px rgba(189, 58, 58, 0.08);
+            transform: translateY(-2px); /* ตัวกล่องจะลอยขึ้นมาเล็กน้อย */
         }
 
-        .form-group input:disabled,
-        .form-group select:disabled {
-            background-color: #e9ecef;
+        .form-group input:disabled, .form-group select:disabled {
+            background: #edf2f7;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
+        /* ปุ่มกดดีไซน์โมเดิร์น ยืดหยุ่นตามแรงกด */
         .submit-btn {
-            background-color: #a52a2a;
+            background: var(--primary-grad);
             color: white;
             border: none;
-            padding: 15px 20px;
+            padding: 16px 20px;
             width: 100%;
-            border-radius: 6px;
+            border-radius: var(--radius-md);
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Sarabun', sans-serif;
+            font-family: 'Prompt', sans-serif;
             margin-top: 10px;
-            box-shadow: 0 4px 6px rgba(165, 42, 42, 0.15);
+            box-shadow: 0 10px 25px rgba(139, 30, 30, 0.25);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        /* เอฟเฟกต์ตอนเมาส์ชี้และกดปุ่ม */
         .submit-btn:hover {
-            background-color: #8b2323;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 12px rgba(165, 42, 42, 0.2);
+            transform: translateY(-3px) scale(1.02); /* ปุ่มลอยและขยายใหญ่ขยับได้ */
+            box-shadow: 0 15px 30px rgba(139, 30, 30, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px) scale(0.98); /* ปุ่มยุบลงเหมือนโดนกดจริง */
         }
 
         .submit-btn:disabled {
-            background-color: #6c757d;
+            background: #a0aec0;
             cursor: not-allowed;
-            opacity: 0.65;
             transform: none;
             box-shadow: none;
         }
@@ -190,58 +236,68 @@
         .footer {
             text-align: center;
             margin-top: 30px;
-            font-size: 13px;
-            color: #6c757d;
+            font-size: 12px;
+            color: #718096;
+            letter-spacing: 0.5px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ตั้งค่าแอนิเมชัน Fade-in Slide Up ขยับนุ่มๆ ตอนเปิดเว็บ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="top-bar"></div>
-
 <div class="wrapper">
     <div class="container">
         <div class="header">
-            <h1>ระบบลงทะเบียนเข้าร่วมกิจกรรม KKU Open House</h1>
-            <p>มหาวิทยาลัยขอนแก่น • ฝ่ายจัดการข้อมูลกลาง</p>
+            <h1>KKU Open House</h1>
+            <p>ระบบลงทะเบียนออนไลน์ยุคใหม่</p>
         </div>
 
         <div class="content">
-            <div class="status-closed" id="closedNotice">❌ ขณะนี้ระบบปิดรับลงทะเบียนตามเวลาที่กำหนดแล้ว</div>
+            <div class="status-closed" id="closedNotice">❌ ขณะนี้ระบบปิดรับลงทะเบียนชั่วคราว</div>
 
-            <h2 class="section-title">ข้อมูลและกำหนดการกิจกรรม</h2>
+            <div class="section-title">
+                <span>✨</span> กำหนดการเข้าเยี่ยมชม
+            </div>
             <div class="info-box">
                 <ul>
-                    <li><strong>วันที่ 24:</strong> เข้าเยี่ยมชมคณะเภสัชศาสตร์ และ คณะสัตวแพทยศาสตร์</li>
-                    <li><strong>วันที่ 25:</strong> เข้าเยี่ยมชมคณะวิศวกรรมศาสตร์ และ คณะวิทยาศาสตร์ (วิทยาการคอมพิวเตอร์)</li>
+                    <li><strong>วันที่ 24:</strong> คณะเภสัชศาสตร์ & คณะสัตวแพทยศาสตร์</li>
+                    <li><strong>วันที่ 25:</strong> คณะวิศวกรรมศาสตร์ & คณะวิทยาศาสตร์</li>
                 </ul>
                 <div class="cost-notice">
-                    💼 ประมาณการค่าใช้จ่ายร่วมกิจกรรม: ไม่เกิน 1,000 บาท
+                    <span>💳</span> ค่าใช้จ่ายกิจกรรม: ประมาณไม่เกิน 1,000 บาท
                 </div>
             </div>
 
-            <h2 class="section-title">ฟอร์มกรอกข้อมูลผู้ลงทะเบียน</h2>
+            <div class="section-title">
+                <span>📝</span> กรอกข้อมูลส่วนตัว
+            </div>
+            
             <form id="regForm">
-                
                 <div class="form-group">
-                    <label for="fullname">ชื่อ - นามสกุล (ระบุคำนำหน้าชื่อ)</label>
-                    <input type="text" id="fullname" placeholder="ตัวอย่าง: นายสมชาย ยินดี" required>
+                    <label for="fullname">ชื่อ - นามสกุล</label>
+                    <input type="text" id="fullname" placeholder="ระบุชื่อพร้อมคำนำหน้า" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="studentId">เลขที่ประจำตัว</label>
-                    <input type="number" id="studentId" placeholder="ระบุเลขที่ประจำตัวในห้องเรียน" required>
+                    <input type="number" id="studentId" placeholder="เลขที่ในห้องเรียนของคุณ" required>
                 </div>
 
                 <div class="form-group">
                     <label for="studentLevel">ระดับชั้นเรียน</label>
                     <select id="studentLevel" required>
-                        <option value="" disabled selected>-- เลือกระดับชั้นเรียน --</option>
+                        <option value="" disabled selected>เลือกชั้นเรียนของคุณ</option>
                         <option value="ม.4">มัธยมศึกษาปีที่ 4 (ม.4)</option>
                         <option value="ม.5">มัธยมศึกษาปีที่ 5 (ม.5)</option>
                         <option value="ม.6">มัธยมศึกษาปีที่ 6 (ม.6)</option>
@@ -250,16 +306,16 @@
                 
                 <div class="form-group">
                     <label for="phone">เบอร์โทรศัพท์ติดต่อ</label>
-                    <input type="tel" id="phone" placeholder="ตัวอย่าง: 0812345678" pattern="[0-9]{9,10}" required>
+                    <input type="tel" id="phone" placeholder="เช่น 0812345678" pattern="[0-9]{9,10}" required>
                 </div>
 
-                <button type="submit" class="submit-btn" id="submitBtn">ส่งข้อมูลลงทะเบียน</button>
+                <button type="submit" class="submit-btn" id="submitBtn">ยืนยันลงทะเบียน</button>
             </form>
         </div>
     </div>
     
     <div class="footer">
-        © 2026 ระบบลงทะเบียนออนไลน์อย่างเป็นทางการ ปลอดภัยตามมาตรฐาน PDPA
+        🔒 ข้อมูลปลอดภัยและเป็นส่วนตัวตามมาตรฐาน PDPA
     </div>
 </div>
 
@@ -271,7 +327,6 @@
     const closedNotice = document.getElementById('closedNotice');
     const formInputs = form.querySelectorAll('input, select');
 
-    // 1. ตรวจสอบเวลาเปิดปิดระบบอัตโนมัติ
     async function checkSystemStatus() {
         try {
             const response = await fetch(WEB_APP_URL);
@@ -279,19 +334,18 @@
 
             if (!data.isOpen) {
                 submitBtn.disabled = true;
-                submitBtn.innerText = "🔒 ปิดระบบรับลงทะเบียนแล้ว";
+                submitBtn.innerText = "🔒 ปิดระบบรับสมัคร";
                 closedNotice.style.display = 'block';
-                closedNotice.innerHTML = `<strong>❌ ขณะนี้ระบบปิดรับลงทะเบียนชั่วคราว</strong><br><span style="font-size:13px; font-weight:normal;">เปิดให้ลงทะเบียนได้ในช่วงเวลา: ${data.startTime} ถึง ${data.endTime}</span>`;
+                closedNotice.innerHTML = `<strong>❌ ระบบปิดรับลงทะเบียนชั่วคราว</strong><br><span style="font-size:12px; font-weight:normal; opacity:0.8">เปิดระบบอีกครั้ง: ${data.startTime} ถึง ${data.endTime}</span>`;
                 formInputs.forEach(input => input.disabled = true);
             }
         } catch (error) {
-            console.error("Status connection error:", error);
+            console.error(error);
         }
     }
     
     checkSystemStatus();
 
-    // 2. ระบบยืนยันแอนิเมชัน 3 มิติ และส่งข้อมูลเข้า Google Sheets
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
@@ -301,36 +355,40 @@
         const phone = document.getElementById('phone').value;
         const cost = 1000;
 
-        // โครงสร้างกล่องยืนยันข้อมูลแบบแอนิเมชันสวยงามมีมิติ (โจทย์ข้อ 2)
+        // หน้าจอยืนยันสไตล์โมเดิร์นมินิมอล มีแอนิเมชันหมุนนุ่มนวล
         Swal.fire({
-            title: 'ตรวจสอบข้อมูลของท่าน',
+            title: 'ตรวจสอบข้อมูล',
             html: `
-                <div style="text-align: left; padding: 10px 20px; font-size: 15px; line-height: 2;">
+                <div style="text-align: left; padding: 5px 15px; font-size: 14.5px; line-height: 2; color:#4a5568;">
                     <b>• ชื่อ-สกุล:</b> ${fullname} <br>
                     <b>• เลขที่:</b> ${studentId} <br>
                     <b>• ระดับชั้น:</b> ${studentLevel} <br>
-                    <b>• เบอร์โทรศัพท์:</b> ${phone}
+                    <b>• เบอร์โทร:</b> ${phone}
                 </div>
             `,
-            icon: 'question',
+            icon: 'info',
+            iconColor: '#bd3a3a',
             showCancelButton: true,
-            confirmButtonColor: '#a52a2a',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'ยืนยันข้อมูลถูกต้อง',
-            cancelButtonText: 'แก้ไขข้อมูล',
+            confirmButtonColor: '#bd3a3a',
+            cancelButtonColor: '#718096',
+            confirmButtonText: 'ข้อมูลถูกต้อง',
+            cancelButtonText: 'แก้ไข',
             background: '#ffffff',
-            customClass: {
-                popup: 'animated fadeInDown'
+            borderRadius: '20px',
+            showClass: {
+                popup: 'animate__animated animate__zoomIn animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__zoomOut animate__faster'
             }
         }).then(async (result) => {
-            // ถ้านักเรียนกดปุ่มยืนยัน
             if (result.isConfirmed) {
                 
-                // แสดงอนิเมชันหมุนโหลดระหว่างบันทึกข้อมูล
                 Swal.fire({
-                    title: 'กำลังบันทึกข้อมูล...',
-                    text: 'กรุณารอสักครู่ ระบบกำลังส่งข้อมูลไปยังฐานข้อมูลกลาง',
+                    title: 'กำลังบันทึกข้อมูล',
+                    text: 'กรุณารอสักครู่...',
                     allowOutsideClick: false,
+                    borderRadius: '20px',
                     didOpen: () => {
                         Swal.showLoading();
                     }
@@ -340,7 +398,7 @@
                 formData.append('name', fullname);
                 formData.append('id', studentId);
                 formData.append('level', studentLevel);
-                formData.append('room', '-'); // ส่งค่าว่างไปแทนเนื่องจากถอดช่องกรอกออกแล้ว
+                formData.append('room', '-');
                 formData.append('phone', phone);
                 formData.append('cost', cost);
 
@@ -351,13 +409,17 @@
                         body: formData
                     });
                     
-                    // ป๊อปอัปแจ้งเตือนสำเร็จแบบเด้งมีมิติพร้อมไอคอนขยับได้ความละเอียดสูง
+                    // แจ้งเตือนสำเร็จพร้อมเอฟเฟกต์เด้งฉลองสวยงาม
                     Swal.fire({
-                        title: 'ลงทะเบียนสำเร็จ!',
-                        text: 'ระบบได้บันทึกข้อมูลการลงทะเบียนของท่านเรียบร้อยแล้ว',
+                        title: 'สำเร็จเรียบร้อย! 🎉',
+                        text: 'บันทึกข้อมูลการลงทะเบียนของคุณแล้ว',
                         icon: 'success',
-                        confirmButtonColor: '#a52a2a',
-                        confirmButtonText: 'ตกลง'
+                        confirmButtonColor: '#bd3a3a',
+                        confirmButtonText: 'ตกลง',
+                        borderRadius: '20px',
+                        showClass: {
+                            popup: 'animate__animated animate__bounceIn'
+                        }
                     });
                     
                     form.reset();
@@ -365,11 +427,11 @@
                 } catch (error) {
                     Swal.fire({
                         title: 'เกิดข้อผิดพลาด',
-                        text: 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+                        text: 'กรุณาลองใหม่อีกครั้ง',
                         icon: 'error',
-                        confirmButtonColor: '#a52a2a'
+                        confirmButtonColor: '#bd3a3a',
+                        borderRadius: '20px'
                     });
-                    console.error(error);
                 }
             }
         });
