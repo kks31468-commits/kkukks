@@ -149,6 +149,8 @@
             font-size: 15px;
             box-sizing: border-box;
             font-family: 'Prompt', sans-serif;
+            background: #ffffff;
+            color: var(--text-main);
         }
 
         .form-group input:focus {
@@ -159,27 +161,27 @@
             transition: all 0.3s ease;
         }
 
-        /* 🧪 ส่วนแก้ไขบั๊ก: แท็บเลื่อนสไตล์ Liquid Glass แบบล็อกตรงกลางเป๊ะ 100% */
+        /* 🧪 ส่วนแก้ไขบั๊กถาวร: แท็บเลื่อนสไตล์ Liquid Glass ตรงเป๊ะ 100% ไม่ซ้อน ไม่เหลื่อม */
         .slide-selector {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* แบ่ง 3 ช่องเท่ากันเป๊ะตามหลัก Grid */
+            display: flex;
             background: rgba(226, 232, 240, 0.6);
-            padding: 6px;
             border-radius: 40px;
             position: relative;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
             border: 1px solid rgba(255, 255, 255, 0.6);
-            height: 56px;
+            height: 50px; /* ล็อกความสูงเพื่อป้องกันการดีดตัว */
             box-sizing: border-box;
-            align-items: center;
+            overflow: hidden; /* กักก้อนของเหลวไว้ข้างในกระจก */
         }
 
         .slide-option-box {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100%;
-            width: 100%;
+            position: relative;
+            z-index: 3; /* ให้ตัวอักษรลอยอยู่เหนือเม็ดเจลสีแดงเสมอ */
         }
 
         .slide-option {
@@ -190,37 +192,35 @@
             align-items: center;
             font-size: 15px;
             font-weight: 500;
-            color: #718096;
+            color: #4a5568;
             cursor: pointer;
-            z-index: 3; /* อยู่เหนือตัวสไลด์สีแดง */
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, font-weight 0.3s ease;
         }
 
-        /* ตัวสไลด์ของเหลว (Liquid Gel) */
+        /* ก้อนเจลเหลวสีแดงด้านหลัง (Liquid Gel Slider) */
         .slide-bg {
             position: absolute;
-            top: 5px;
-            left: 6px;
-            width: calc(33.333% - 8px); /* คำนวณความกว้างให้พอดี 1 ช่อง */
-            height: calc(100% - 10px);
-            background: var(--primary-grad);
-            border-radius: 35px;
+            top: 0;
+            left: 0;
+            width: 33.3333%; /* แบ่งพื้นที่วิ่งทีละ 1 ใน 3 เท่ากันพอดีเป๊ะ */
+            height: 100%;
+            background: linear-gradient(135deg, #cc3c3c 0%, #8b1e1e 100%);
+            border-radius: 40px;
             z-index: 1;
-            /* ใช้ cubic-bezier เพิ่มความยืดหยุ่นเหมือนของเหลวขยับ */
-            transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1); 
-            box-shadow: 0 8px 16px rgba(139, 30, 30, 0.3), 
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 4px 12px rgba(139, 30, 30, 0.3), 
                         inset 0 -3px 6px rgba(0,0,0,0.2), 
                         inset 0 3px 6px rgba(255,255,255,0.3);
         }
 
-        /* แสงสะท้อนผิวกระจกด้านบนก้อนเจลสีแดง */
+        /* เพิ่มเอฟเฟกต์แสงสะท้อนผิวกระจกด้านบน (Liquid Glass Highlight) */
         .slide-bg::after {
             content: '';
             position: absolute;
             top: 3px;
             left: 15%;
             width: 70%;
-            height: 5px;
+            height: 6px;
             background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
             border-radius: 3px;
         }
@@ -229,16 +229,16 @@
             display: none;
         }
 
-        /* แก้ไขคำสั่งเลื่อน: ใช้ X% ที่สัมพันธ์กับ Grid ช่องตัวเลือก ทำให้ตรงล็อกกึ่งกลางทุกอัน */
+        /* เลื่อนพิกัดของเหลวตามช่องแบบ 0%, 100%, 200% การันตีกึ่งกลางทุกรอบ */
         #m4:checked ~ .slide-bg { transform: translateX(0%); }
         #m5:checked ~ .slide-bg { transform: translateX(100%); }
         #m6:checked ~ .slide-bg { transform: translateX(200%); }
 
-        /* เปลี่ยนสีตัวอักษรของช่องที่ถูกเลือกให้สว่างขึ้น */
+        /* ติ๊กช่องไหน ให้ข้อความของช่องนั้นสว่างวาบเป็นสีขาว */
         #m4:checked ~ .slide-option-box [for="m4"],
         #m5:checked ~ .slide-option-box [for="m5"],
         #m6:checked ~ .slide-option-box [for="m6"] {
-            color: #ffffff;
+            color: #ffffff !important;
             font-weight: 600;
         }
 
