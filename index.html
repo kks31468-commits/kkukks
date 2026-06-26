@@ -10,6 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        /* ==========================================================================
+           RESET & BASE STYLES (เคลียร์ค่าเริ่มต้นหน้าเว็บทั้งหมด)
+           ========================================================================== */
         :root {
             --primary: #a52a2a;
             --primary-grad: linear-gradient(135deg, #cc3c3c 0%, #8b1e1e 100%);
@@ -39,6 +42,9 @@
             box-sizing: border-box;
         }
 
+        /* ==========================================================================
+           CARD CONTAINER (กล่องแก้วมิติหลัก)
+           ========================================================================== */
         .container {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
@@ -73,6 +79,9 @@
             padding: 40px 30px;
         }
 
+        /* ==========================================================================
+           COMPONENTS (ส่วนแจ้งเตือนและรายละเอียดกิจกรรม)
+           ========================================================================== */
         .status-closed {
             background: #fff5f5;
             color: #e53e3e;
@@ -129,6 +138,9 @@
             gap: 8px;
         }
 
+        /* ==========================================================================
+           FORM INPUTS (กล่องกรอกข้อความทั่วไป)
+           ========================================================================== */
         .form-group {
             margin-bottom: 26px;
         }
@@ -161,29 +173,35 @@
             transition: all 0.3s ease;
         }
 
-        /* 🧪 ส่วนแก้ไขบั๊กถาวร: แท็บเลื่อนสไตล์ Liquid Glass ตรงเป๊ะ 100% ไม่ซ้อน ไม่เหลื่อม */
+        /* ==========================================================================
+           🧪 NEW LIQUID GLASS SLIDER (ระบบแท็บเลื่อนโครงสร้างใหม่ไร้บั๊ก)
+           ========================================================================== */
         .slide-selector {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* บังคับแบ่งเป็น 3 บล็อกเท่ากันแบบเป๊ะๆ */
             background: rgba(226, 232, 240, 0.6);
             border-radius: 40px;
             position: relative;
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
             border: 1px solid rgba(255, 255, 255, 0.6);
-            height: 50px; /* ล็อกความสูงเพื่อป้องกันการดีดตัว */
+            height: 52px; /* ล็อกความสูงเพื่อไม่ให้ปุ่มดีดตัว */
             box-sizing: border-box;
-            overflow: hidden; /* กักก้อนของเหลวไว้ข้างในกระจก */
+            overflow: hidden; /* กักก้อนลิควิดสีแดงไม่ให้ทะลุแนวโค้งขอบนอก */
+            align-items: center;
         }
 
+        /* บล็อกตัวรับพิกัดประจำตำแหน่ง ม.4 ม.5 ม.6 */
         .slide-option-box {
-            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100%;
+            width: 100%;
             position: relative;
-            z-index: 3; /* ให้ตัวอักษรลอยอยู่เหนือเม็ดเจลสีแดงเสมอ */
+            z-index: 3; /* สำคัญมาก: ดันตัวอักษรให้อยู่เหนือแผ่นเลื่อนสีแดงตลอดเวลา */
         }
 
+        /* ตัวอักษรข้อความด้านใน จัดระเบียบให้อยู่กึ่งกลางบล็อก 100% */
         .slide-option {
             width: 100%;
             height: 100%;
@@ -197,23 +215,23 @@
             transition: color 0.3s ease, font-weight 0.3s ease;
         }
 
-        /* ก้อนเจลเหลวสีแดงด้านหลัง (Liquid Gel Slider) */
+        /* ก้อนของเหลวสีแดงเจลใส (Liquid Gel Slider Dynamic Element) */
         .slide-bg {
             position: absolute;
             top: 0;
             left: 0;
-            width: 33.3333%; /* แบ่งพื้นที่วิ่งทีละ 1 ใน 3 เท่ากันพอดีเป๊ะ */
+            width: 33.3333%; /* ความกว้างล็อกตามสัดส่วน 1 ใน 3 ช่องพอดี */
             height: 100%;
             background: linear-gradient(135deg, #cc3c3c 0%, #8b1e1e 100%);
-            border-radius: 40px;
-            z-index: 1;
-            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            border-radius: 40px; /* ขอบโค้งมนเท่ากับตัวขอบนอกสุด */
+            z-index: 1; /* วิ่งอยู่เลเยอร์ด้านล่างตัวอักษร */
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1); /* แอนิเมชันสไลด์แบบของเหลวหนืด */
             box-shadow: 0 4px 12px rgba(139, 30, 30, 0.3), 
                         inset 0 -3px 6px rgba(0,0,0,0.2), 
                         inset 0 3px 6px rgba(255,255,255,0.3);
         }
 
-        /* เพิ่มเอฟเฟกต์แสงสะท้อนผิวกระจกด้านบน (Liquid Glass Highlight) */
+        /* แสงไฮไลท์มันวาวสะท้อนผิวแก้วด้านบนก้อนสีแดง (Liquid Glass Finish) */
         .slide-bg::after {
             content: '';
             position: absolute;
@@ -225,16 +243,17 @@
             border-radius: 3px;
         }
 
+        /* ซ่อนปุ่ม Radio ดั้งเดิมของระบบ */
         .radio-hidden {
             display: none;
         }
 
-        /* เลื่อนพิกัดของเหลวตามช่องแบบ 0%, 100%, 200% การันตีกึ่งกลางทุกรอบ */
+        /* ควบคุมทิศทางการย้ายพิกัดก้อนของเหลวตามสัดส่วนบล็อกจริง */
         #m4:checked ~ .slide-bg { transform: translateX(0%); }
         #m5:checked ~ .slide-bg { transform: translateX(100%); }
         #m6:checked ~ .slide-bg { transform: translateX(200%); }
 
-        /* ติ๊กช่องไหน ให้ข้อความของช่องนั้นสว่างวาบเป็นสีขาว */
+        /* เปลี่ยนสีตัวอักษรให้สว่างเป็นสีขาวเฉพาะช่องที่กำลังโดนเลือก */
         #m4:checked ~ .slide-option-box [for="m4"],
         #m5:checked ~ .slide-option-box [for="m5"],
         #m6:checked ~ .slide-option-box [for="m6"] {
@@ -242,6 +261,9 @@
             font-weight: 600;
         }
 
+        /* ==========================================================================
+           BUTTON & FOOTER STYLES
+           ========================================================================== */
         .submit-btn {
             background: var(--primary-grad);
             color: white;
@@ -372,6 +394,7 @@
 </div>
 
 <script>
+    // URL เชื่อมต่อหลังบ้าน Google Sheets ของคุณ
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxDxUYRDIjEyTC1AKujB36fZjL-fYeIMFljq-A4zYJ8of4xYE3vWV_0UtFlUS2tro8/exec";
 
     const form = document.getElementById('regForm');
@@ -379,6 +402,7 @@
     const closedNotice = document.getElementById('closedNotice');
     const formInputs = form.querySelectorAll('input');
 
+    // ฟังก์ชันเช็คสถานะระบบปิด/เปิดรับสมัครจากหลังบ้าน
     async function checkSystemStatus() {
         try {
             const response = await fetch(WEB_APP_URL);
@@ -398,6 +422,7 @@
     
     checkSystemStatus();
 
+    // ตัวดักรับเหตุการณ์เมื่อผู้ใช้งานกดปุ่ม ยืนยันข้อมูล
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
@@ -407,6 +432,7 @@
         const phone = document.getElementById('phone').value;
         const cost = 1000;
 
+        // แสดงหน้าจอ Pop-up ตรวจเช็คข้อมูลก่อนส่งจริง
         Swal.fire({
             title: 'ตรวจสอบข้อมูลลงทะเบียน',
             html: `
@@ -431,6 +457,7 @@
         }).then(async (result) => {
             if (result.isConfirmed) {
                 
+                // กำลังนำส่งฐานข้อมูล
                 Swal.fire({
                     title: 'กำลังบันทึกข้อมูล ⏳',
                     text: 'ระบบกำลังนำส่งข้อมูลเข้าสู่คลาวด์ส่วนกลาง...',
@@ -454,6 +481,7 @@
                         body: formData
                     });
                     
+                    // ป๊อปอัพแจ้งส่งข้อมูลสำเร็จเด่นขึ้นมา
                     Swal.fire({
                         title: 'สำเร็จเรียบร้อย! 🎉',
                         text: 'ข้อมูลของท่านถูกจัดเก็บลงฐานข้อมูลสำเร็จแล้ว',
