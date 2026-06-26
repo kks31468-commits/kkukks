@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KKU Open House 2026</title>
+    <title>KKU Open House 2026 - Registration</title>
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -34,12 +34,12 @@
 
         .wrapper {
             width: 100%;
-            max-width: 550px;
+            max-width: 580px;
             padding: 30px 20px;
             box-sizing: border-box;
         }
 
-        /* การ์ดแก้ว 3 มิติ ลอยละมุน ไร้เหลี่ยมแข็ง */
+        /* การ์ดแก้วลอยมิติ 3D Glassmorphism */
         .container {
             background: rgba(255, 255, 255, 0.82);
             backdrop-filter: blur(20px);
@@ -61,18 +61,6 @@
             position: relative;
         }
 
-        /* คลื่นวงกลมซ้อนมิติพื้นหลังด้านบน */
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: rgba(255,255,255,0.06);
-            border-radius: 50%;
-        }
-
         .header h1 {
             margin: 0;
             font-size: 28px;
@@ -92,7 +80,6 @@
             padding: 40px 30px;
         }
 
-        /* กล่องแจ้งเตือนสไตล์สมูท */
         .status-closed {
             background: #fff5f5;
             color: #e53e3e;
@@ -114,7 +101,6 @@
             gap: 10px;
         }
 
-        /* 🌟 เอฟเฟกต์อิโมจิหมุนพริ้วไหวดุ๊กดิ๊กตามโจทย์ */
         .animated-emoji {
             display: inline-block;
             animation: emojiFloat 2s ease-in-out infinite alternate;
@@ -183,30 +169,55 @@
             transform: translateY(-2px);
         }
 
-        /* 🎚️ ระบบกดเลือกชั้นรูปแบบสไลด์ 3 มิติ (Segmented Slide Control) */
-        .slide-selector {
+        /* 🧪 🧬 ระบบเลือกแบบสไลด์สไตล์ Liquid Glass ครอบคลุมสมบูรณ์แบบ */
+        .glass-tab-container {
             display: flex;
-            background: #edf2f7;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
             padding: 6px;
-            border-radius: var(--radius-md);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02), 0 10px 25px rgba(0,0,0,0.02);
             position: relative;
-            user-select: none;
-            border: 1px solid rgba(0,0,0,0.02);
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .slide-option {
+        .grade-option {
             flex: 1;
-            text-align: center;
-            padding: 13px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grade-option input[type="radio"] {
+            display: none; /* ซ่อนปุ่ม Radio วงกลมแบบเดิม */
+        }
+
+        /* ตัวอักษร ม.ต่างๆ จัดให้อยู่กึ่งกลางพอดีเป๊ะ */
+        .grade-label {
+            width: 100%;
+            height: 52px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-size: 15px;
             font-weight: 500;
             color: #718096;
             cursor: pointer;
-            z-index: 2;
-            transition: color 0.3s ease;
+            border-radius: 35px;
+            z-index: 3;
+            transition: color 0.3s ease, background-color 0.3s ease;
         }
 
-        /* ตัวไฮไลท์ที่จะวิ่งสไลด์ตามอย่างนุ่มนวล */
+        /* สไตล์เมื่อนำเมาส์ไปชี้ปุ่มที่ไม่ได้เลือก */
+        .grade-option:hover .grade-label {
+            background: rgba(255, 255, 255, 0.25);
+            color: var(--text-main);
+        }
+
+        /* แถบไฮไลท์สีแดงสไตล์ของเหลว (Liquid Capsule) วิ่งสไลด์ขยับตามนุ่มๆ */
         .slide-bg {
             position: absolute;
             top: 6px;
@@ -214,29 +225,39 @@
             width: calc(33.33% - 8px);
             height: calc(100% - 12px);
             background: var(--primary-grad);
-            border-radius: calc(var(--radius-md) - 4px);
+            border-radius: 35px;
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            box-shadow: 0 6px 15px rgba(139, 30, 30, 0.25);
+            box-shadow: 0 8px 20px rgba(139, 30, 30, 0.3);
             z-index: 1;
         }
 
-        /* ขยับไฮไลท์ตามตำแหน่งปุ่มที่กด */
-        input[value="ม.4"]:checked ~ .slide-bg { transform: translateX(0); }
-        input[value="ม.5"]:checked ~ .slide-bg { transform: translateX(100%); }
-        input[value="ม.6"]:checked ~ .slide-bg { transform: translateX(200%); }
+        /* เอฟเฟกต์แสงสะท้อนมันวาวด้านบนของแคปซูลของเหลว */
+        .slide-bg::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 15%;
+            width: 70%;
+            height: 8px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 4px;
+            opacity: 0.9;
+        }
 
-        input[value="ม.4"]:checked ~ label[for="m4"],
-        input[value="ม.5"]:checked ~ label[for="m5"],
-        input[value="ม.6"]:checked ~ label[for="m6"] {
+        /* คำสั่งควบคุมให้แถบสไลด์วิ่งไปตรงล็อกพอดี */
+        input[value="ม.4"]:checked ~ .slide-bg { transform: translateX(0); }
+        input[value="ม.5"]:checked ~ .slide-bg { transform: translateX(100.5%); }
+        input[value="ม.6"]:checked ~ .slide-bg { transform: translateX(201%); }
+
+        /* เปลี่ยนสีตัวอักษรเป็นสีขาวเมื่อปุ่มนั้นถูกเลือก */
+        input[value="ม.4"]:checked + .grade-label,
+        input[value="ม.5"]:checked + .grade-label,
+        input[value="ม.6"]:checked + .grade-label {
             color: white;
             font-weight: 600;
         }
 
-        .radio-hidden {
-            display: none;
-        }
-
-        /* ปุ่มส่งข้อมูลตอบสนองพริ้วไหว */
+        /* ปุ่มส่งข้อมูลแบบมีมิติแรงกด */
         .submit-btn {
             background: var(--primary-grad);
             color: white;
@@ -276,13 +297,11 @@
             color: #718096;
         }
 
-        /* คลื่นแอนิเมชันของอิโมจิ */
         @keyframes emojiFloat {
             0% { transform: translateY(0) rotate(0deg); }
             100% { transform: translateY(-4px) rotate(10deg); }
         }
 
-        /* แอนิเมชันเปิดหน้าเว็บขยายมิติแบบ Smooth */
         @keyframes cubicBackend {
             from { opacity: 0; transform: scale(0.94) translateY(30px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
@@ -325,21 +344,28 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="studentId">เลขที่</label>
+                    <label for="studentId">เลขที่ประจำตัว</label>
                     <input type="number" id="studentId" placeholder="เลขที่ในห้องเรียนของคุณ" required>
                 </div>
 
                 <div class="form-group">
                     <label>ระดับชั้นเรียน</label>
-                    <div class="slide-selector">
-                        <input type="radio" name="level" value="ม.4" id="m4" class="radio-hidden" checked>
-                        <label for="m4" class="slide-option">ม.4</label>
+                    <div class="glass-tab-container">
+                        
+                        <div class="grade-option">
+                            <input type="radio" name="level" value="ม.4" id="m4" checked>
+                            <label for="m4" class="grade-label">ม.4</label>
+                        </div>
 
-                        <input type="radio" name="level" value="ม.5" id="m5" class="radio-hidden">
-                        <label for="m5" class="slide-option">ม.5</label>
+                        <div class="grade-option">
+                            <input type="radio" name="level" value="ม.5" id="m5">
+                            <label for="m5" class="grade-label">ม.5</label>
+                        </div>
 
-                        <input type="radio" name="level" value="ม.6" id="m6" class="radio-hidden">
-                        <label for="m6" class="slide-option">ม.6</label>
+                        <div class="grade-option">
+                            <input type="radio" name="level" value="ม.6" id="m6">
+                            <label for="m6" class="grade-label">ม.6</label>
+                        </div>
 
                         <div class="slide-bg"></div>
                     </div>
@@ -392,12 +418,10 @@
 
         const fullname = document.getElementById('fullname').value;
         const studentId = document.getElementById('studentId').value;
-        // ดึงข้อมูลระดับชั้นเรียนจากปุ่มสไลด์ที่เลือกอยู่ขณะนั้น
         const studentLevel = document.querySelector('input[name="level"]:checked').value;
         const phone = document.getElementById('phone').value;
         const cost = 1000;
 
-        // กล่องแจ้งเตือนสไตล์มินิมอล มีมิติความลึก (ZoomIn Animate)
         Swal.fire({
             title: 'ตรวจสอบข้อมูลลงทะเบียน',
             html: `
@@ -439,8 +463,8 @@
                 const formData = new URLSearchParams();
                 formData.append('name', fullname);
                 formData.append('id', studentId);
-                formData.append('level', studentLevel); // เก็บค่าชั้นจากสไลด์
-                formData.append('room', '-');
+                formData.append('level', studentLevel);
+                formData.append('room', '-'); // ส่งค่าห้องคงที่ตามสเปคหลังบ้าน
                 formData.append('phone', phone);
                 formData.append('cost', cost);
 
