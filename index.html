@@ -306,6 +306,96 @@
             from { opacity: 0; transform: scale(0.94) translateY(30px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
+
+        /* 🎚️ กล่องกระจกชั้นนอก (Outer Container) */
+.slide-selector {
+    display: flex;
+    background: rgba(240, 244, 248, 0.7); /* พื้นหลังจางๆ ให้เงาด้านในชัด */
+    padding: 6px;
+    border-radius: 40px; /* ขอบโค้งมนละมุนแบบแคปซูล */
+    position: relative;
+    user-select: none;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.05), 0 10px 20px rgba(0,0,0,0.02);
+    align-items: center;
+    height: 54px; /* ล็อกความสูงเพื่อไม่ให้ปุ่มดันกัน */
+    box-sizing: border-box;
+}
+
+/* ช่องตัวเลือกแต่ละช่อง */
+.slide-option-box {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* ตัวอักษร ม.4 ม.5 ม.6 อยู่ตรงกลางเป๊ะ */
+.slide-option {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    color: #5a6a85;
+    cursor: pointer;
+    z-index: 2; /* ดันข้อความมาอยู่เหนือก้อนลิควิด */
+    transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+/* 🧪 ตัวสไลด์เบื้องหลังสไตล์ก้อนของเหลวมันวาว (Liquid Glass Slider) */
+.slide-bg {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(33.33% - 6px);
+    height: calc(100% - 8px);
+    background: linear-gradient(135deg, #cc3c3c 0%, #8b1e1e 100%); /* สีแดง มข. ไล่เฉด */
+    border-radius: 35px; /* โค้งมนแบบเจลเหลว */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1;
+    
+    /* สร้างมิติความลึกและเงาตกกระทบแบบ 3D Gel */
+    box-shadow: 0 8px 16px rgba(139, 30, 30, 0.35), 
+                inset 0 -4px 8px rgba(0, 0, 0, 0.2), 
+                inset 0 4px 8px rgba(255, 255, 255, 0.3);
+}
+
+/* 🌟 ลูกเล่นประกายแสงสะท้อนขอบบน ให้ดูเหมือนแก้วเหลว (Glossy Highlight) */
+.slide-bg::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 15%;
+    width: 70%;
+    height: 6px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 3px;
+}
+
+/* ซ่อนปุ่ม Radio เดิม */
+.radio-hidden {
+    display: none;
+}
+
+/* 🪄 สั่งให้ก้อนลิควิดขยับตามการคลิก (ตรงล็อก 100%) */
+#m4:checked ~ .slide-bg { transform: translateX(0); }
+#m5:checked ~ .slide-bg { transform: translateX(100%); }
+#m6:checked ~ .slide-bg { transform: translateX(200%); }
+
+/* เมื่อเลือกแล้ว ให้ตัวอักษรเปลี่ยนเป็นสีขาวเด่นขึ้นมา */
+#m4:checked ~ .slide-option-box [for="m4"],
+#m5:checked ~ .slide-option-box [for="m5"],
+#m6:checked ~ .slide-option-box [for="m6"] {
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
     </style>
 </head>
 <body>
@@ -349,20 +439,29 @@
                 </div>
 
                 <div class="form-group">
-                    <label>ระดับชั้นเรียน</label>
-                    <div class="slide-selector">
-                        <input type="radio" name="level" value="ม.4" id="m4" class="radio-hidden" checked>
-                        <label for="m4" class="slide-option">ม.4</label>
+    <label>ระดับชั้นเรียน</label>
+    <div class="slide-selector">
+        
+        <input type="radio" name="level" value="ม.4" id="m4" class="radio-hidden" checked>
+        <input type="radio" name="level" value="ม.5" id="m5" class="radio-hidden">
+        <input type="radio" name="level" value="ม.6" id="m6" class="radio-hidden">
 
-                        <input type="radio" name="level" value="ม.5" id="m5" class="radio-hidden">
-                        <label for="m5" class="slide-option">ม.5</label>
+        <div class="slide-option-box">
+            <label for="m4" class="slide-option">ม.4</label>
+        </div>
 
-                        <input type="radio" name="level" value="ม.6" id="m6" class="radio-hidden">
-                        <label for="m6" class="slide-option">ม.6</label>
+        <div class="slide-option-box">
+            <label for="m5" class="slide-option">ม.5</label>
+        </div>
 
-                        <div class="slide-bg"></div>
-                    </div>
-                </div>
+        <div class="slide-option-box">
+            <label for="m6" class="slide-option">ม.6</label>
+        </div>
+
+        <div class="slide-bg"></div>
+        
+    </div>
+</div>
                 
                 <div class="form-group">
                     <label for="phone">เบอร์โทรศัพท์ติดต่อ</label>
